@@ -1,0 +1,13 @@
+name: ecommerce
+version: '1.0.0'
+profile: ecommerce
+
+model-paths: ["models"]
+test-paths: ["tests"]
+
+models:
+  ecommerce:
+    staging:
+      materialized: view
+    marts:
+      materialized: table

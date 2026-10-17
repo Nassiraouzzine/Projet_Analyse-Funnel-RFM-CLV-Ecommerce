@@ -1,0 +1,118 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: "Ventes nettes Silver filtrées — identifiées, sans retours, sans outliers"
+    columns:
+      - name: invoice_no
+        tests: [not_null]
+      - name: customer_id
+        tests: [not_null]
+      - name: line_revenue
+        tests: [not_null]
+
+  - name: fact_transactions
+    description: "Table de faits centrale — 1 ligne = 1 ligne de vente nette"
+    columns:
+      - name: invoice_no
+        tests: [not_null]
+      - name: customer_id
+        tests: [not_null]
+      - name: category_proxy
+        tests: [not_null]
+
+  - name: mart_funnel
+    description: "Sessions converties agrégées par CustomerID x jour — ST1"
+    columns:
+      - name: customer_id
+        tests: [not_null]
+      - name: session_date
+        tests: [not_null]
+      - name: basket_value
+        tests: [not_null]
+      - name: is_converted
+        tests:
+          - accepted_values:
+              values: [true]
+
+  - name: dim_customer
+    description: "Dimension client avec historique agrégé"
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+
+  - name: dim_date
+    description: "Calendrier complet Dec 2010 — Dec 2011 avec flags UK"
+    columns:
+      - name: date_day
+        tests: [not_null, unique]
+  - name: dim_payment
+    description: >
+      Proxy dim_payment via mode_of_shipment (Shipping dataset).
+      Le dataset UCI ne contient pas de mode de paiement réel —
+      hypothèse documentée dans DECISIONS.md sous DEC-PAYMENT-001.
+    columns:
+      - name: payment_mode_proxy
+        tests: [not_null, unique]
+
+
+  # ── ST2 : RFM + CLV + Cohortes ────────────────────────────
+
+  - name: mart_rfm
+    description: "Segmentation RFM — 1 ligne = 1 client avec scores R,F,M et segment nommé"
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+      - name: r_score
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+      - name: f_score
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+      - name: m_score
+        tests:
+          - not_null
+          - accepted_values:
+              values: [1, 2, 3, 4, 5]
+      - name: rfm_segment
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - Champions
+                - Loyal Customers
+                - Potential Loyalists
+                - New Customers
+                - At Risk
+                - Hibernating
+                - Lost
+      - name: monetary
+        tests: [not_null]
+
+  - name: mart_clv
+    description: "CLV simplifiée par client — Panier moyen x Fréquence annuelle x Durée relation"
+    columns:
+      - name: customer_id
+        tests: [not_null, unique]
+      - name: clv_simple
+        tests: [not_null]
+      - name: rfm_segment
+        tests: [not_null]
+      - name: clv_category
+        tests:
+          - accepted_values:
+              values: [High Value, Medium Value, Low Value]
+
+  - name: mart_cohorts
+    description: "Rétention mensuelle par cohorte d'acquisition — heatmap 12x12"
+    columns:
+      - name: cohort_month
+        tests: [not_null]
+      - name: period_number
+        tests: [not_null]
+      - name: retention_rate
+        tests: [not_null]
