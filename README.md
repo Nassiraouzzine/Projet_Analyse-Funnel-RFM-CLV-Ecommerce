@@ -1,3 +1,8 @@
+> Projet académique d'équipe (5 personnes), réalisé en 2026.
+> **Ma contribution (Nassira Ouzzine) :** traitement des données (pipeline ETL
+> Bronze → Silver dans `ETL_Bronze_Silver` et modèles dbt de la couche Gold
+> dans `DBT_Gold`, avec DuckDB) et dashboard Tableau.
+
 # 🛒 Projet PFA – Analyse Funnel, Segmentation RFM & CLV E-Commerce
 
 ## 📌 Description
@@ -27,16 +32,17 @@ Le projet est structuré autour de deux volets principaux :
 
 ## 👥 Membres de l'équipe
 
+- Nassira Ouzzine
 - Aicha Idaani
 - Wafaa Chtakire
-- Nassira ouzzin
 - Hajar Elmimouni
 - Manal Lazmi
--------------------------------
+
+---
 
 ## Technologies utilisées
 
--google collab
+- Google Colab
 - Python
 - Jupyter Notebook
 - Pandas
@@ -44,17 +50,17 @@ Le projet est structuré autour de deux volets principaux :
 - DuckDB
 - SQL
 - dbt
-- Git 
-- tableau
+- Git
+- Tableau
 
------------------------
+---
 
 ## 📁 Structure du projet
 
 ```
 Projet_RFM_CLV_Ecommerce/
 │
-├── Dashboard_PowerBI/      # Dashboards Power BI
+├── Dashboard_PowerBI/      # Dashboards Tableau
 ├── Data/                   # Jeux de données brutes et préparées
 ├── DBT_Gold/               # Modèles dbt Gold
 ├── ETL_Bronze_Silver/      # Pipeline ETL Bronze → Silver
@@ -62,25 +68,28 @@ Projet_RFM_CLV_Ecommerce/
 ├── Profiling/              # Rapports de data profiling (HTML)
 ├── rapport/                # Rapports finaux (PDF, DOCX...)
 ├── README.md
+```
+
 ---
 
-##  Installation
+## Installation
 
 Cloner le dépôt :
 
 ```bash
-git clone https://github.com/aichaidaani/Projet_funnel_RFM_CLV_Ecommerce.git
-cd Projet_funnel_RFM_CLV_Ecommerce/Projet_RFM_CLV_Ecommerce
+git clone https://github.com/Nassiraouzzine/Projet_Analyse-Funnel-RFM-CLV-Ecommerce.git
+cd Projet_Analyse-Funnel-RFM-CLV-Ecommerce/Projet_RFM_CLV_Ecommerce
 ```
 
-Installer les librairies:
+Installer les librairies :
 
+```bash
 pip install pandas numpy matplotlib jupyter duckdb
 ```
 
 ---
 
-##  Exécution
+## Exécution
 
 Lancer Jupyter Notebook :
 
@@ -88,11 +97,11 @@ Lancer Jupyter Notebook :
 jupyter notebook
 ```
 
-Ouvrir ensuite les notebooks présents dans le dossier `notebooks`.
+Ouvrir ensuite les notebooks présents dans le dossier `Notebooks`.
 
 ---
 
-##  Résultats obtenus
+## Résultats obtenus
 
 ### ST1
 - Analyse du funnel de conversion.
@@ -112,5 +121,3 @@ Ouvrir ensuite les notebooks présents dans le dossier `notebooks`.
 - Programme de rétention des clients à risque.
 - Mise en place d'un programme VIP pour les Champions.
 - Acquisition ciblée des profils à forte valeur.
-
----.
